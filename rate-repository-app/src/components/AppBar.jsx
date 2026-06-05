@@ -18,7 +18,7 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <Pressable>
-        <Text color="textAppBar" fontWeight="bold" fontSize="subheading">Repositories</Text>
+        <Text color="textWhite" fontWeight="bold" fontSize="subheading">Repositories</Text>
       </Pressable>
     </View>
   );
