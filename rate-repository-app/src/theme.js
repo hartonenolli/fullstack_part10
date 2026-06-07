@@ -6,6 +6,8 @@ const theme = {
     primary: '#0366d6',
     appBarBackground: '#24292e',
     aplicationBackground: '#e1e4e8',
+    black: '#000000',
+    textError: '#d73a4a',
   },
   fontSizes: {
     body: 14,
@@ -20,7 +22,6 @@ const theme = {
   },
   textField: {
     backgroundColor: '#ffffff',
-    borderColor: '#000000',
     borderWidth: 2,
     padding: 10,
     borderRadius: 10,
