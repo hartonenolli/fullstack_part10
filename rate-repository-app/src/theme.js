@@ -18,6 +18,25 @@ const theme = {
     normal: '400',
     bold: '700',
   },
+  textField: {
+    backgroundColor: '#ffffff',
+    borderColor: '#000000',
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: '#0366d6',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  container: {
+    padding: 10,
+    backgroundColor: '#ffffff',
+  },
 };
 
 theme.repositoryItem = {
