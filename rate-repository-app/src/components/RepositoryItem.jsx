@@ -9,7 +9,7 @@ const RepositoryItem = ({ repository }) => (
 		<View style={theme.repositoryItem.headerRow}>
 			<Image source={{ uri: repository.ownerAvatarUrl }} style={theme.repositoryItem.image} />
 			<View style={theme.repositoryItem.contentContainer}>
-				<Text fontSize="subHeading" fontWeight="bold">
+				<Text fontSize="subheading" fontWeight="bold">
 					{repository.fullName}
 				</Text>
 				<Text style={theme.repositoryItem.description}>{repository.description}</Text>
