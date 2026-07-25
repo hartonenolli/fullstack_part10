@@ -7,8 +7,7 @@ const useRepositories = () => {
   const fetchRepositories = async () => {
     setLoading(true);
 
-    // Replace the IP address part with your own IP address!
-    const response = await fetch('http://192.168.0.19:5000/api/repositories');
+    const response = await fetch(process.env.EXPO_PUBLIC_APOLLO_URI_HOOK);
     const json = await response.json();
 
     setLoading(false);
