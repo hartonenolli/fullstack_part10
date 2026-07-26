@@ -1,11 +1,12 @@
 import { TextInput, Pressable, View } from 'react-native';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-native';
 import { useFormik } from 'formik';
 import useSignIn from '../hooks/useSignIn';
 import Text from './Text';
 import theme from '../theme';
 import * as yup from 'yup';
-import AuthStorage from '../utils/authStorage';
+import useAuthStorage from '../hooks/useAuthStorage';
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -19,10 +20,12 @@ const validationSchema = yup.object().shape({
 const SignIn = () => {
   const [signIn] = useSignIn();
   const [token, setToken] = useState(null);
+  const navigate = useNavigate();
+  const authStorage = useAuthStorage();
 
   useEffect(() => {
     const fetchToken = async () => {
-      const accessToken = await AuthStorage.getAccessToken();
+      const accessToken = await authStorage.getAccessToken();
       setToken(accessToken);
     };
 
@@ -32,11 +35,8 @@ const SignIn = () => {
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
-      const result = await signIn({ username, password });
-      console.log('Sign in successful:', result);
-      await AuthStorage.setAccessToken(result.authenticate.accessToken);
-      const storedAccessToken = await AuthStorage.getAccessToken();
-      console.log('Token stored', storedAccessToken);
+      await signIn({ username, password });
+      navigate('/');
     } catch (error) {
       console.error('Sign in error:', error);
     }
@@ -44,7 +44,7 @@ const SignIn = () => {
 
   const OnLogout = async () => {
     try {
-      await AuthStorage.removeAccessToken();
+      await authStorage.removeAccessToken();
       setToken(null);
       console.log('Logged out successfully');
     } catch (error) {

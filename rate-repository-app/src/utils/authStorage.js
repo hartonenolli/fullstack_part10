@@ -19,4 +19,4 @@ class AuthStorage {
   }
 }
 
-export default new AuthStorage();
+export default AuthStorage;
