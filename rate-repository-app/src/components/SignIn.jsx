@@ -1,9 +1,11 @@
 import { TextInput, Pressable, View } from 'react-native';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import useSignIn from '../hooks/useSignIn';
 import Text from './Text';
 import theme from '../theme';
 import * as yup from 'yup';
+import AuthStorage from '../utils/authStorage';
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -16,14 +18,37 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const accessToken = await AuthStorage.getAccessToken();
+      setToken(accessToken);
+    };
+
+    fetchToken();
+  }, []);
 
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
       const result = await signIn({ username, password });
       console.log('Sign in successful:', result);
+      await AuthStorage.setAccessToken(result.authenticate.accessToken);
+      const storedAccessToken = await AuthStorage.getAccessToken();
+      console.log('Token stored', storedAccessToken);
     } catch (error) {
       console.error('Sign in error:', error);
+    }
+  };
+
+  const OnLogout = async () => {
+    try {
+      await AuthStorage.removeAccessToken();
+      setToken(null);
+      console.log('Logged out successfully');
+    } catch (error) {
+      console.error('Logout error:', error);
     }
   };
 
@@ -61,8 +86,8 @@ const SignIn = () => {
       {formik.touched.password && formik.errors.password && (
         <Text color='textError'>{formik.errors.password}</Text>
       )}
-      <Pressable onPress={formik.handleSubmit} style={theme.button}>
-        <Text color='textWhite' fontWeight='bold'>Sign In</Text>
+      <Pressable onPress={token ? OnLogout : formik.handleSubmit} style={theme.button}>
+        <Text color='textWhite' fontWeight='bold'>{token ? 'Logout' : 'Sign In'}</Text>
       </Pressable>
     </View>
   );
