@@ -5,7 +5,7 @@ import Text from './Text';
 import RepositoryCount from './RepositoryCount';
 
 const RepositoryItem = ({ repository }) => (
-	<View style={theme.repositoryItem.container}>
+	<View style={theme.repositoryItem.container} testID="repositoryItem">
 		<View style={theme.repositoryItem.headerRow}>
 			<Image source={{ uri: repository.ownerAvatarUrl }} style={theme.repositoryItem.image} />
 			<View style={theme.repositoryItem.contentContainer}>

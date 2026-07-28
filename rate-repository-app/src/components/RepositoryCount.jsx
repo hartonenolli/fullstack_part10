@@ -24,19 +24,19 @@ const formatCount = (count) => {
 const RepositoryCount = ({ repository }) => {
 	return (
 		<View style={styles.statsRow}>
-			<View style={styles.statItem}>
+			<View style={styles.statItem} testID="stargazersCount">
 				<Text fontWeight="bold">{formatCount(repository.stargazersCount)}</Text>
 				<Text color="textSecondary">Stars</Text>
 			</View>
-			<View style={styles.statItem}>
+			<View style={styles.statItem} testID="forksCount">
 				<Text fontWeight="bold">{formatCount(repository.forksCount)}</Text>
 				<Text color="textSecondary">Forks</Text>
 			</View>
-			<View style={styles.statItem}>
+			<View style={styles.statItem} testID="reviewCount">
 				<Text fontWeight="bold">{formatCount(repository.reviewCount)}</Text>
 				<Text color="textSecondary">Reviews</Text>
 			</View>
-			<View style={styles.statItem}>
+			<View style={styles.statItem} testID="ratingAverage">
 				<Text fontWeight="bold">{formatCount(repository.ratingAverage)}</Text>
 				<Text color="textSecondary">Rating</Text>
 			</View>
