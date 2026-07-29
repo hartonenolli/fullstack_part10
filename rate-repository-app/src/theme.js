@@ -50,6 +50,20 @@ const theme = {
   },
 };
 
+theme.repositoryList = {
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.textWhite,
+  },
+  contentContainer: {
+    padding: 10,
+  },
+  separator: {
+    height: 10,
+    backgroundColor: theme.colors.aplicationBackground,
+  },
+};
+
 theme.repositoryItem = {
   container: {
     display: 'flex',
