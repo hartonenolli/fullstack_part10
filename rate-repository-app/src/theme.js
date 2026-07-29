@@ -107,4 +107,35 @@ theme.repositoryItem = {
   },
 };
 
+theme.reviewItem = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 15,
+    backgroundColor: theme.colors.textWhite,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  ratingContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  contentContainer: {
+    flex: 1,
+    flexShrink: 1,
+  },
+  text: {
+    paddingVertical: 5,
+  },
+};
+
+
 export default theme;

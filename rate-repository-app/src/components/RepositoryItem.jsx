@@ -25,4 +25,3 @@ const RepositoryItem = ({ repository }) => (
 );
 
 export default RepositoryItem;
-
