@@ -36,6 +36,14 @@ const theme = {
     borderRadius: 10,
     alignItems: 'center',
   },
+  singleRepositoryButton: {
+    backgroundColor: '#0366d6',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 10,
+  },
   container: {
     padding: 10,
     backgroundColor: '#ffffff',

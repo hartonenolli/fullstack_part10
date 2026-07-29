@@ -41,6 +41,7 @@ export const GET_REPOSITORY = gql`
       stargazersCount
       ratingAverage
       reviewCount
+      url
     }
   }
 `;
