@@ -10,7 +10,7 @@ const AUTHENTICATE = gql`
 
 export default AUTHENTICATE;
 
-const CREATE_REVIEW = gql`
+export const CREATE_REVIEW = gql`
   mutation CreateReview($review: CreateReviewInput!) {
     createReview(review: $review) {
       repositoryId
@@ -19,5 +19,3 @@ const CREATE_REVIEW = gql`
     }
   }
 `;
-
-export { CREATE_REVIEW };

@@ -1,10 +1,12 @@
 import { TextInput, Pressable, View, StyleSheet } from 'react-native';
-import { gql, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client/react';
 import { useNavigate } from 'react-router-native';
 import { useFormik } from 'formik';
 import Text from './Text';
 import theme from '../theme';
 import * as yup from 'yup';
+import { CREATE_REVIEW } from '../graphql/mutations';
 
 const styles = StyleSheet.create({
     container: {
@@ -16,6 +18,8 @@ const styles = StyleSheet.create({
 
 const CreateAReview = () => {
     const navigate = useNavigate();
+    const [createReview] = useMutation(CREATE_REVIEW);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const formik = useFormik({
         initialValues: {
@@ -25,12 +29,8 @@ const CreateAReview = () => {
             text: ''
         },
         validationSchema: yup.object({
-            repositoryOwner: yup
-                .string()
-                .required('Repository owner is required'),
-            repositoryName: yup
-                .string()
-                .required('Repository name is required'),
+            repositoryOwner: yup.string().required('Repository owner is required'),
+            repositoryName: yup.string().required('Repository name is required'),
             rating: yup
                 .number()
                 .min(0, 'Rating must be between 0 and 100')
@@ -39,8 +39,26 @@ const CreateAReview = () => {
             text: yup.string()
         }),
         onSubmit: async (values) => {
-            console.log('values are:', values);
-            navigate('/');
+            setErrorMessage('');
+            try {
+                const { data } = await createReview({
+                    variables: {
+                        review: {
+                            ownerName: values.repositoryOwner,
+                            repositoryName: values.repositoryName,
+                            rating: Number(values.rating),
+                            text: values.text,
+                        }
+                    }
+                });
+
+                const repositoryId = data.createReview.repositoryId;
+                navigate(`/repositories/${repositoryId}`);
+            } catch (e) {
+                setErrorMessage(e.message);
+                console.error('Error creating review:', e);
+                setTimeout(() => setErrorMessage(''), 10000);
+            }
         }
     });
 
@@ -92,6 +110,7 @@ const CreateAReview = () => {
             <Pressable onPress={() => formik.handleSubmit()} style={theme.button}>
                 <Text color='textWhite' fontWeight='bold'>Create Review</Text>
             </Pressable>
+            {errorMessage ? <Text color='textError'>{errorMessage}</Text> : null}
         </View>
     );
 };
