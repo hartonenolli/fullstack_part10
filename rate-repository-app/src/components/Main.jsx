@@ -1,6 +1,6 @@
 import AppBar from './AppBar';
 import RepositoryList from './RepositoryList';
-import CreateReview from './CreateReview';
+import CreateAReview from './CreateAReview';
 import SignIn from './SignIn';
 import theme from '../theme';
 import { StyleSheet, View } from 'react-native';
@@ -20,7 +20,7 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} />
-        <Route path="/create-review" element={<CreateReview />} />
+        <Route path="/create-review" element={<CreateAReview />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/repositories/:id" element={<SingleRepository />} />
         <Route path="*" element={<Navigate to="/" />} />
