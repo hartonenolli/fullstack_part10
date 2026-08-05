@@ -8,18 +8,23 @@ import theme from '../theme';
 
 const ItemSeparator = () => <View style={theme.repositoryList.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, sortOption, setSortOption }) => {
   const [menuVisible, setMenuVisible] = useState(false);
-  const [selectedSortOption, setSelectedSortOption] = useState('Latest repositories');
   const navigate = useNavigate();
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
   const handleSortOptionSelect = (option) => {
-    setSelectedSortOption(option);
+    setSortOption(option);
     setMenuVisible(false);
   }
+
+    const selectedLabel = {
+    LATEST: 'Latest repositories',
+    HIGHEST: 'Highest rated repositories',
+    LOWEST: 'Lowest rated repositories',
+  }[sortOption];
 
   return (
     <View style={theme.repositoryList.container}>
@@ -28,13 +33,13 @@ export const RepositoryListContainer = ({ repositories }) => {
         onDismiss={() => setMenuVisible(false)}
         anchor={
           <Pressable onPress={() => setMenuVisible(true)} style={theme.repositoryList.sortButton}>
-            <Text color="textWhite">{selectedSortOption}</Text>
+            <Text color="textWhite">{selectedLabel}</Text>
           </Pressable>
         }
       >
-        <Menu.Item onPress={() => handleSortOptionSelect('Latest repositories')} title="Latest repositories" />
-        <Menu.Item onPress={() => handleSortOptionSelect('Highest rated repositories')} title="Highest rated repositories" />
-        <Menu.Item onPress={() => handleSortOptionSelect('Lowest rated repositories')} title="Lowest rated repositories" />
+        <Menu.Item onPress={() => handleSortOptionSelect('LATEST')} title="Latest repositories" />
+        <Menu.Item onPress={() => handleSortOptionSelect('HIGHEST')} title="Highest rated repositories" />
+        <Menu.Item onPress={() => handleSortOptionSelect('LOWEST')} title="Lowest rated repositories" />
       </Menu>
       <ItemSeparator />
       <FlatList
@@ -53,8 +58,16 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
-  return <RepositoryListContainer repositories={repositories} />;
-};
+  const [sortOption, setSortOption] = useState('LATEST');
 
+  const { repositories } = useRepositories(sortOption);
+
+  return (
+    <RepositoryListContainer
+      repositories={repositories}
+      sortOption={sortOption}
+      setSortOption={setSortOption}
+    />
+  );
+};
 export default RepositoryList;

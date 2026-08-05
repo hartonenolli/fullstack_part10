@@ -1,24 +1,35 @@
 import { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client/react';
+import { GET_REPOSITORIES } from '../graphql/queries';
 
-const useRepositories = () => {
+const useRepositories = (sortOption) => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
-  const fetchRepositories = async () => {
-    setLoading(true);
+  const orderBy = {
+    LATEST: 'CREATED_AT',
+    HIGHEST: 'RATING_AVERAGE',
+    LOWEST: 'RATING_AVERAGE',
+  }[sortOption];
 
-    const response = await fetch(process.env.EXPO_PUBLIC_APOLLO_URI_HOOK);
-    const json = await response.json();
+  const orderDirection = {
+    LATEST: 'DESC',
+    HIGHEST: 'DESC',
+    LOWEST: 'ASC',
+  }[sortOption];
 
-    setLoading(false);
-    setRepositories(json);
-  };
+  const { data, refetch } = useQuery(GET_REPOSITORIES, {
+    variables: { orderBy, orderDirection },
+    fetchPolicy: 'cache-and-network',
+  });
 
   useEffect(() => {
-    fetchRepositories();
-  }, []);
+    if (data) {
+      setRepositories(data.repositories);
+    }
+  }, [data]);
 
-  return { repositories, loading, refetch: fetchRepositories };
+  return { repositories, loading, refetch };
 };
 
 export default useRepositories;
