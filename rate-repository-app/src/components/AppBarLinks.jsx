@@ -36,6 +36,11 @@ const AppBarLinks = ({ style, authorizedUser }) => {
           <Text style={[styles.link, style]}>Sign In</Text>
         </Link>
       )}
+      {!authorizedUser && (
+        <Link to="/sign-up" style={{ textDecoration: 'none' }}>
+          <Text style={[styles.link, style]}>Sign Up</Text>
+        </Link>
+      )}
     </Pressable>
   );
 };
