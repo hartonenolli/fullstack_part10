@@ -62,6 +62,13 @@ theme.repositoryList = {
     height: 10,
     backgroundColor: theme.colors.aplicationBackground,
   },
+  sortButton: {
+    backgroundColor: theme.colors.textWhite,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
 };
 
 theme.repositoryItem = {
