@@ -7,6 +7,7 @@ import Text from './Text';
 import theme from '../theme';
 import * as yup from 'yup';
 import { CREATE_REVIEW } from '../graphql/mutations';
+import { ME } from '../graphql/queries';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,7 +19,9 @@ const styles = StyleSheet.create({
 
 const CreateAReview = () => {
     const navigate = useNavigate();
-    const [createReview] = useMutation(CREATE_REVIEW);
+    const [createReview] = useMutation(CREATE_REVIEW, {
+        refetchQueries: [{ query: ME, variables: { includeReviews: true } }],
+    });
     const [errorMessage, setErrorMessage] = useState('');
 
     const formik = useFormik({

@@ -23,9 +23,14 @@ const AppBarLinks = ({ style, authorizedUser }) => {
         <Text style={[styles.link, style]}>Repositories</Text>
       </Link>
       {authorizedUser && (
-        <Link to="/create-review" style={{ textDecoration: 'none' }}>
-          <Text style={[styles.link, style]}>Create a Review</Text>
-        </Link>
+        <>
+          <Link to="/create-review" style={{ textDecoration: 'none' }}>
+            <Text style={[styles.link, style]}>Create a Review</Text>
+          </Link>
+          <Link to="/my-reviews" style={{ textDecoration: 'none' }}>
+            <Text style={[styles.link, style]}>My Reviews</Text>
+          </Link>
+        </>
       )}
       {authorizedUser ? (
         <Pressable onPress={onSignOut}>
