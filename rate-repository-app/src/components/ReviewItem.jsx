@@ -3,7 +3,41 @@ import { View } from 'react-native';
 import { format } from 'date-fns';
 import theme from '../theme';
 import Text from './Text';
+import { Button } from 'react-native-paper';
 
+const ViewRepositoryButton = () => {
+  const handlePress = () => {
+    // TODO
+  };
+
+  return (
+    <Button
+      mode="contained"
+      onPress={handlePress}
+      style={theme.button}
+      compact
+    >
+      View repository
+    </Button>
+  );
+};
+
+const DeleteReviewButton = () => {
+  const handleDelete = () => {
+    // TODO
+  };
+
+  return (
+    <Button
+      mode="contained"
+      onPress={handleDelete}
+      style={theme.buttonRed}
+      compact
+    >
+      Delete review
+    </Button>
+  );
+};
 const ReviewItem = ({ review, showRepositoryName = false }) => (
     <View style={theme.reviewItem.container} testID="reviewItem">
         <View style={theme.reviewItem.headerRow}>
@@ -29,6 +63,12 @@ const ReviewItem = ({ review, showRepositoryName = false }) => (
                 </Text>
             </View>
         </View>
+            {showRepositoryName && (
+                <View style={theme.reviewItem.buttonsContainer}>
+                    <ViewRepositoryButton />
+                    <DeleteReviewButton />
+                </View>
+            )}
     </View>
 );
 

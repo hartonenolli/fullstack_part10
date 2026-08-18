@@ -32,14 +32,21 @@ const theme = {
   button: {
     backgroundColor: '#0366d6',
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonRed: {
+    backgroundColor: '#d73a4a',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     borderRadius: 10,
     alignItems: 'center',
   },
   singleRepositoryButton: {
     backgroundColor: '#0366d6',
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 10,
@@ -142,6 +149,11 @@ theme.reviewItem = {
   contentContainer: {
     flex: 1,
     flexShrink: 1,
+  },
+  buttonsContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginTop: 10,
   },
   text: {
     paddingVertical: 5,
