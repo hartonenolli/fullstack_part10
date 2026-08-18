@@ -1,41 +1,73 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Pressable, Alert } from 'react-native';
 import { format } from 'date-fns';
 import theme from '../theme';
 import Text from './Text';
-import { Button } from 'react-native-paper';
+import { useNavigate } from 'react-router-native';
+import { useMutation } from '@apollo/client/react';
+import { DELETE_REVIEW } from '../graphql/mutations';
+import { ME } from '../graphql/queries';
 
-const ViewRepositoryButton = () => {
+const ViewRepositoryButton = ({ review }) => {
+  const navigate = useNavigate();
   const handlePress = () => {
-    // TODO
+    console.log('pressed', review.repository.id);
+    navigate(`/repositories/${review.repository.id}`);
   };
 
   return (
-    <Button
-      mode="contained"
+    <Pressable
       onPress={handlePress}
       style={theme.button}
       compact
     >
-      View repository
-    </Button>
+      <Text color="textWhite">
+        View repository
+      </Text>
+    </Pressable>
   );
 };
 
-const DeleteReviewButton = () => {
+const DeleteReviewButton = ({ review }) => {
+  const [deleteReview] = useMutation(DELETE_REVIEW, {
+    refetchQueries: [{ query: ME, variables: { includeReviews: true } }],
+  });
   const handleDelete = () => {
-    // TODO
+    Alert.alert(
+      'Delete Review',
+      'Are you sure you want to delete this review?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            deleteReview({ variables: { id: review.id } })
+              .then(() => {
+                console.log('Review deleted successfully');
+              })
+              .catch((error) => {
+                console.error('Error deleting review:', error);
+              });
+          }
+        }
+      ]
+    );
   };
 
   return (
-    <Button
-      mode="contained"
+    <Pressable
       onPress={handleDelete}
       style={theme.buttonRed}
       compact
     >
-      Delete review
-    </Button>
+      <Text color="textWhite">
+        Delete review
+      </Text>
+    </Pressable>
   );
 };
 const ReviewItem = ({ review, showRepositoryName = false }) => (
@@ -65,8 +97,8 @@ const ReviewItem = ({ review, showRepositoryName = false }) => (
         </View>
             {showRepositoryName && (
                 <View style={theme.reviewItem.buttonsContainer}>
-                    <ViewRepositoryButton />
-                    <DeleteReviewButton />
+                    <ViewRepositoryButton review={review} />
+                    <DeleteReviewButton review={review} />
                 </View>
             )}
     </View>
