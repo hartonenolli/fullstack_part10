@@ -69,6 +69,10 @@ theme.repositoryList = {
     borderRadius: 10,
     alignItems: 'center',
   },
+  searchInput: {
+    margin: 10,
+    backgroundColor: theme.colors.textWhite,
+  },
 };
 
 theme.repositoryItem = {

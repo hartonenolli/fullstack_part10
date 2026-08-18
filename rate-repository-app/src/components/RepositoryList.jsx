@@ -2,13 +2,14 @@ import RepositoryItem from './RepositoryItem';
 import { FlatList, View, Pressable, Text } from 'react-native';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
-import { Menu } from 'react-native-paper';
+import { Menu, TextInput } from 'react-native-paper';
 import { useState } from 'react';
+import { useDebounce } from 'use-debounce';
 import theme from '../theme';
 
 const ItemSeparator = () => <View style={theme.repositoryList.separator} />;
 
-export const RepositoryListContainer = ({ repositories, sortOption, setSortOption }) => {
+export const RepositoryListContainer = ({ repositories, sortOption, setSortOption, searchKeyword, setSearchKeyword }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const navigate = useNavigate();
   const repositoryNodes = repositories
@@ -28,6 +29,13 @@ export const RepositoryListContainer = ({ repositories, sortOption, setSortOptio
 
   return (
     <View style={theme.repositoryList.container}>
+      <TextInput
+        label="Search repositories"
+        mode="outlined"
+        style={theme.repositoryList.searchInput}
+        value={searchKeyword}
+        onChangeText={setSearchKeyword}
+      />
       <Menu
         visible={menuVisible}
         onDismiss={() => setMenuVisible(false)}
@@ -59,14 +67,18 @@ export const RepositoryListContainer = ({ repositories, sortOption, setSortOptio
 
 const RepositoryList = () => {
   const [sortOption, setSortOption] = useState('LATEST');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
 
-  const { repositories } = useRepositories(sortOption);
+  const { repositories } = useRepositories(sortOption, debouncedSearchKeyword);
 
   return (
     <RepositoryListContainer
       repositories={repositories}
       sortOption={sortOption}
       setSortOption={setSortOption}
+      searchKeyword={searchKeyword}
+      setSearchKeyword={setSearchKeyword}
     />
   );
 };
